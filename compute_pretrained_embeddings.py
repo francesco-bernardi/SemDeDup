@@ -33,6 +33,9 @@ def get_embeddings(model, dataloader, emd_memmap, paths_memmap):
     with torch.no_grad():
         for data_batch, paths_batch, batch_indices in tqdm(dataloader):
             data_batch = data_batch.to(device)
-            encodings = model(data_batch)
+            encodings = model.get_image_features(pixel_values=data_batch)
+            encodings = encodings.cpu()
             emd_memmap[batch_indices] = normalize(encodings, dim=1)
             paths_memmap[batch_indices] = paths_batch
+
+    return emd_memmap, paths_memmap
