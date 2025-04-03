@@ -68,7 +68,7 @@ def custom_collate_fn(batch, image_processor):
     # Unzip the batch into separate lists
     images, paths, indices = zip(*batch)
     inputs = image_processor(images=list(images), return_tensors="pt")
-    data_batch = inputs["pixel_values"]
+    data_batch = inputs["pixel_values"].to('cuda')
 
     return data_batch, list(paths), list(indices)
 

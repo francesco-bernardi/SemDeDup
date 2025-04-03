@@ -23,19 +23,21 @@ def get_embeddings(model, dataloader, emd_memmap, paths_memmap):
 
     # -- Device
     device = "cuda" if torch.cuda.is_available() else "cpu"
-
+    print(device)
     # -- model
     model = model.to(device)
     model = model.eval()
 
-    # -- Get and store 1)encodings 2)path to each example
+    # -- Get and store 1) encodings 2)path to each example
     print("Get encoding...")
     with torch.no_grad():
         for data_batch, paths_batch, batch_indices in tqdm(dataloader):
-            data_batch = data_batch.to(device)
+            # data_batch = data_batch.to(device)
             encodings = model.get_image_features(pixel_values=data_batch)
-            encodings = encodings.cpu()
-            emd_memmap[batch_indices] = normalize(encodings, dim=1)
-            paths_memmap[batch_indices] = paths_batch
+            # image_embeddings = encodings.image_embeds
+            image_embeddings = encodings
+            image_embeddings = encodings.cpu()
+            # emd_memmap[batch_indices] = normalize(image_embeddings, dim=1)
+            # paths_memmap[batch_indices] = paths_batch
 
     return emd_memmap, paths_memmap
