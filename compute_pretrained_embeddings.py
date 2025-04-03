@@ -37,4 +37,5 @@ def get_embeddings(model, dataloader, emd_memmap, paths_memmap):
             emd_memmap[batch_indices] = embeds_normalized.cpu().detach().numpy()
             paths_memmap[batch_indices] = paths_batch
 
+    # TODO: return statement is not necessary
     return emd_memmap, paths_memmap

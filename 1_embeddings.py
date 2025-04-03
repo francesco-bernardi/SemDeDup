@@ -9,7 +9,7 @@ from my_utils import load_config
 
 config = load_config("semdedup_configs.yaml")
 
-model_name = "openai/clip-vit-base-patch32"
+model_name = config['model_name']
 tar_files_directory = os.path.abspath("data/raw")
 batch_size = config['batch_size']
 
@@ -26,8 +26,8 @@ dataloader = DataLoader(
     num_workers=0
 )
 
-paths_str_type = 'U256'
-embed_float_type = 'float32'
+paths_str_type = config['paths_str_type']
+embed_float_type = config['embed_float_type']
 emb_memory_loc = config['embs_memory_loc']
 paths_memory_loc = config['path_memory_loc']
 dataset_size = dataset.__len__()
@@ -49,6 +49,7 @@ path_array = np.memmap(
 
 
 if __name__ == "__main__":
+    # TODO: remove embeddigs and paths if remove return to  get_embeddings
     embeddings, paths = get_embeddings(
         model, 
         dataloader, 

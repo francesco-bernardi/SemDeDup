@@ -17,7 +17,7 @@ import pprint
 import submitit
 import pathlib
 from typing import Union, Optional
-from utils import get_logger
+from clustering.utils import get_logger
 
 
 def faiss_index_to_gpu(cpu_index):
@@ -109,7 +109,7 @@ def compute_centroids(
         logger.info(f"Time for clustering (mins): {(time.time()-start_time)/(60):.2f}")
 
         # -- Move kmeans index to cpu to save it
-        kmeans_index = faiss.index_gpu_to_cpu(kmeans.index)
+        kmeans_index = faiss_index_to_gpu(kmeans.index)
         logger.info(f"faiss kmeans index to store: {type(kmeans_index)}")
         ## -- Save faiss kmeans index object as pickle file
         with open(kmeans_obj_file_loc, "wb") as file:

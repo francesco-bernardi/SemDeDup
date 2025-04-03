@@ -1,12 +1,17 @@
-
+# -- model
+model_name: "openai/clip-vit-base-patch32"
+# -- directories
 save_folder: "data/embeddings"
 sorted_clusters_path: "data/sorted_clusters"
+# -- data type
+paths_str_type: 'U256'
+embed_float_type: 'float32'
 # -- number of clusters
 num_clusters: 50000
 embs_memory_loc: "data/embeddings/embs.npy"
 path_memory_loc: "data/embeddings/path.npy"
 # -- dataset size
-dataset_size: <dataset_size>
+dataset_size: 1004
 batch_size: 16
 # -- embeddings size
 emd_size: 512
