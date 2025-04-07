@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler())
 
 confg_file = "clustering/configs/openclip/clustering_configs.yaml"
+
 ## -- Load kmeans clustering parameters from configs file
 with open(confg_file, 'r') as y_file:
     params = yaml.load(y_file, Loader=yaml.FullLoader)

@@ -4,6 +4,7 @@
 # This source code is licensed under the license found in the
 # LICENSE file in the root directory of this source tree.
 
+# NOTE: conda install -c pytorch faiss-gpu (otherwise does not work)
 import faiss
 import torch
 import time
@@ -82,6 +83,7 @@ def compute_centroids(
     use_gpu = torch.cuda.is_available()
 
     device = "cuda" if use_gpu else "cpu"
+    print(device)
 
     logger.info(f"Clustering on {device} ....")
 
@@ -109,7 +111,7 @@ def compute_centroids(
         logger.info(f"Time for clustering (mins): {(time.time()-start_time)/(60):.2f}")
 
         # -- Move kmeans index to cpu to save it
-        kmeans_index = faiss_index_to_gpu(kmeans.index)
+        kmeans_index = faiss.index_gpu_to_cpu(kmeans.index)
         logger.info(f"faiss kmeans index to store: {type(kmeans_index)}")
         ## -- Save faiss kmeans index object as pickle file
         with open(kmeans_obj_file_loc, "wb") as file:

@@ -7,7 +7,7 @@ sorted_clusters_path: "data/sorted_clusters"
 paths_str_type: 'U256'
 embed_float_type: 'float32'
 # -- number of clusters
-num_clusters: 50000
+num_clusters: 500 #50000
 embs_memory_loc: "data/embeddings/embs.npy"
 path_memory_loc: "data/embeddings/path.npy"
 # -- dataset size
@@ -21,3 +21,6 @@ which_to_keep: "hard"
 seed: 1234
 # -- largest cluster size the memory is large enough to process. If the cluster size is larger than it, we will devide the cluster into small clusters and process each one separately.
 largest_cluster_size_to_process: 10000000
+eps: 0.1
+
+output_txt_path: "data/kept_examples.txt"
