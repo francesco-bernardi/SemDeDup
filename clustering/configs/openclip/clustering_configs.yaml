@@ -8,8 +8,8 @@ sorted_clusters_file_loc: "data/sorted_clusters"
 save_folder: "data/embeddings"
 paths_str_type: 'U256'
 embed_float_type: 'float32'
-ncentroids: 500 # original 50000
-dataset_size:  1004
+ncentroids: 50 # original 50000
+dataset_size:  1000
 emb_size: 512
 niter: 100
 seed: 1234

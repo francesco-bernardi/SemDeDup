@@ -1,17 +1,18 @@
 # -- model
 model_name: "openai/clip-vit-base-patch32"
 # -- directories
-save_folder: "data/embeddings"
+save_folder: "data/"
 sorted_clusters_path: "data/sorted_clusters"
+semdedup_pruning_tables_path: "data/dataframes"
 # -- data type
 paths_str_type: 'U256'
 embed_float_type: 'float32'
 # -- number of clusters
-num_clusters: 500 #50000
+num_clusters: 50 #50000
 embs_memory_loc: "data/embeddings/embs.npy"
 path_memory_loc: "data/embeddings/path.npy"
 # -- dataset size
-dataset_size: 1004
+dataset_size: 1000
 batch_size: 16
 # -- embeddings size
 emd_size: 512
@@ -22,5 +23,7 @@ seed: 1234
 # -- largest cluster size the memory is large enough to process. If the cluster size is larger than it, we will devide the cluster into small clusters and process each one separately.
 largest_cluster_size_to_process: 10000000
 eps: 0.1
-
+eps_list: [0.0001, 0.001, 0.1, 0.2, 0.3, 0.4, 0.5]
+which_to_keep: "easy"
+# -- output
 output_txt_path: "data/kept_examples.txt"
