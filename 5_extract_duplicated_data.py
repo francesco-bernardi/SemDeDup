@@ -4,7 +4,7 @@ from my_utils import load_config
 config = load_config("semdedup_configs.yaml")
 
 output_txt_path = config['output_txt_path']
-semdedup_pruning_tables_path = ...
+semdedup_pruning_tables_path = config['semdedup_pruning_tables_path']
 sorted_clusters_path = config['sorted_clusters_path']
 eps = config['eps']
 num_clusters = config['num_clusters']
