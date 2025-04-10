@@ -9,7 +9,7 @@ import torch
 import numpy as np
 import pandas as pd
 
-from constants import DIST_METRIC_INDEX
+from constants import DIST_METRIC_INDEX, IMAGE_ID_IN_CLUSTER_INDEX, IMAGE_NAME_INDEX
 from my_utils import load_config
 from tqdm import tqdm
 
@@ -53,7 +53,7 @@ def semdedup(cluster, cluster_reps):
     assert pair_w_sim_matrix.shape[0] == pair_w_sim_matrix.shape[1]
 
     ## -- get paths to cluster i images
-    image_urls = cluster[:, 0]
+    image_urls = cluster[:, IMAGE_NAME_INDEX]
 
     ## -- make sure all the paths are unique this ensure that the duplicates 
     # are really stored many time times on memory
@@ -102,7 +102,7 @@ def semdedup(cluster, cluster_reps):
 
 
 def process_shard(shard: int):
-    print("SemDeDup params: ", config)
+    # print("SemDeDup params: ", config)
     start_time = time.time()
     end_shard = config["num_clusters"]
     print(f"This process will process clusters {shard} to {end_shard}")
@@ -169,6 +169,10 @@ def process_shard(shard: int):
         if cluster_size == 1:
             points_to_remove_df = pd.DataFrame()
             points_to_remove_df["indices"] = [0]
+            points_to_remove_df["image_id_in_dataset"] = cluster_i[
+                :, IMAGE_ID_IN_CLUSTER_INDEX
+                ]
+            points_to_remove_df["cluster_url"] = cluster_i[:, IMAGE_NAME_INDEX]
             for eps in config["eps_list"]:
                 points_to_remove_df[f"eps={eps}"] = [False]
             if config["save_folder"] != "":
@@ -188,8 +192,10 @@ def process_shard(shard: int):
             clutser_items_indices = clutser_items_indices[::-1]
             cluster_i = cluster_i[clutser_items_indices]
 
+
         # Get indices for cluster items in the dataset.
-        cluster_ids = cluster_i[:, 1].astype("int32")
+        cluster_ids = cluster_i[:, IMAGE_ID_IN_CLUSTER_INDEX].astype("int32")
+        cluster_urls = cluster_i[:, IMAGE_NAME_INDEX].astype("str")
         cluster_reps = embs[cluster_ids]
         cluster_reps = torch.tensor(cluster_reps)
 
@@ -240,6 +246,8 @@ def process_shard(shard: int):
         std_pair_w_sim /= len(cluster_part_ids)
         points_to_remove_df = pd.DataFrame()
         points_to_remove_df["indices"] = clutser_items_indices
+        points_to_remove_df["image_id_in_dataset"] = cluster_ids
+        points_to_remove_df["cluster_url"] = cluster_urls
 
         for eps in config["eps_list"]:
             eps_points_to_remove = M > 1 - eps
