@@ -12,7 +12,7 @@ num_clusters: 50 #50000
 embs_memory_loc: "data/embeddings/embs.npy"
 path_memory_loc: "data/embeddings/path.npy"
 # -- dataset size
-dataset_size: 1000
+dataset_size: 20220
 batch_size: 16
 # -- embeddings size
 emd_size: 512
