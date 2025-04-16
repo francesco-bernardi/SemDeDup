@@ -9,7 +9,7 @@ save_folder: "data/embeddings"
 paths_str_type: 'U256'
 embed_float_type: 'float32'
 ncentroids: 50 # original 50000
-dataset_size:  1000
+dataset_size:  20220
 emb_size: 512
 niter: 100
 seed: 1234
