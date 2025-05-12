@@ -49,8 +49,7 @@ path_array = np.memmap(
 
 
 if __name__ == "__main__":
-    # TODO: remove embeddigs and paths if remove return to  get_embeddings
-    embeddings, paths = get_embeddings(
+    get_embeddings(
         model, 
         dataloader, 
         emb_array, 
