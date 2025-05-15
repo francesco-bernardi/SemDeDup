@@ -146,9 +146,6 @@ def run_complete_pipeline():
         )
         # del emb_memory # Close memmap
 
-        # Update main config with clustering results if needed by later stages
-        config['num_clusters'] = config['clustering']['num_clusters']
-
         logger.info(f"Stage 2 finished in {time.time() - stage_start_time:.2f} seconds.")
 
     except Exception as e:
@@ -223,7 +220,7 @@ def run_complete_pipeline():
             config['sorted_clusters_path'],
             config['semdedup_pruning_tables_path'],
             config['eps'],
-            config['num_clusters'],
+            config['clustering']['num_clusters'],
             config['output_txt_path'],
             retreive_kept_samples=config.get('retreive_kept_samples', True)
         )
