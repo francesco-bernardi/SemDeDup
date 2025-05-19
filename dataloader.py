@@ -95,6 +95,32 @@ def custom_collate_fn(batch, image_processor):
 
     return data_batch, list(uids), list(indices)
 
+class FilteredTarImageDataset(Dataset):
+    def __init__(self, base_dataset, uid_list):
+        """
+        Filter a TarImageDataset to include only samples with UIDs in uid_list
+        
+        Args:
+            base_dataset (TarImageDataset): The original dataset to filter
+            uid_list (list): List of UIDs to include
+        """
+        self.base_dataset = base_dataset
+        self.uid_set = set(uid_list)  # Convert to set for O(1) lookups
+        
+        # Create a list of indices that match our UIDs
+        self.filtered_indices = []
+        for i, (_, _, uid) in enumerate(base_dataset.samples):
+            if uid in self.uid_set:
+                self.filtered_indices.append(i)
+    
+    def __len__(self):
+        return len(self.filtered_indices)
+    
+    def __getitem__(self, index):
+        # Get the sample from the base dataset using the filtered index
+        base_index = self.filtered_indices[index]
+        return self.base_dataset[base_index]
+
 # if __name__ == "__main__":
 #     # Example usage:
 #     tar_files_directory = "/SemDeDup/data/raw"
