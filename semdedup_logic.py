@@ -106,7 +106,7 @@ def process_shard(shard: int, config=None):
         
     # print("SemDeDup params: ", config)
     start_time = time.time()
-    end_shard = config["num_clusters"]
+    end_shard = config["clustering"]["num_clusters"]
     print(f"This process will process clusters {shard} to {end_shard}")
 
     # For a single-node run, process the entire shard without task-level division.
