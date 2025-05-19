@@ -9,6 +9,7 @@ DATA_DIR="data"
 DEFAULT_DIRS=(
   "dataframes"
   "embeddings"
+  "clustering"
   "sorted_clusters"
   "statistics/dataframes"
   "statistics/dicts"
